@@ -5,9 +5,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.UUID;
 
@@ -20,21 +22,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Serial serial = new Serial("AIUEO");
+        final Serial serial = new Serial("RNBT-463E");
         serial.setSerialListener(new SerialListener() {
             @Override
             public void opened() {
-
+                Toast toast = Toast.makeText(MainActivity.this,"complete",Toast.LENGTH_SHORT);
+                toast.show();
             }
 
             @Override
             public void open_failed(String errorMessage) {
-
+                Toast toast = Toast.makeText(MainActivity.this,errorMessage,Toast.LENGTH_SHORT);
+                toast.show();
             }
 
             @Override
             public void read(String data) {
-
+                Log.d("sigaisen","data");
             }
 
             @Override
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!serial.isConnected()){
-                    serial.open(UUID.fromString(""));
+                    serial.open(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
                     serial.run();
                 }else {
                     if (serial.isRunnable()){
